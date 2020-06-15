@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  webapp:
+    image: lzphp:dev
+    build:
+      context: ./php
+      args:
+        buildno: 1
+    ports:
+      - "9000:9000"
+  proxy:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - "webapp"
