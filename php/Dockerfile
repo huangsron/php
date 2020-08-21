@@ -174,5 +174,11 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     composer self-update && \
     composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/bin/
+RUN install-php-extensions gettext
+
+COPY zend-loader-php5.6-linux-x86_64/*.so /usr/local/lib/php/extensions/no-debug-non-zts-20131226/
+RUN docker-php-ext-enable ZendGuardLoader
+
 #命令
 CMD ["php-fpm"]
